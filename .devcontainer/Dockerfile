@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/devcontainers/python:1-3.11-bullseye
+FROM mcr.microsoft.com/devcontainers/python:dev-3.13-trixie
 
 ENV PYTHONUNBUFFERED 1
 
