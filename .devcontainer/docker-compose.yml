@@ -1,0 +1,67 @@
+services:
+  py-app:
+    container_name: py-app
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+
+    volumes:
+      - ../..:/workspaces:cached
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+    # Runs app on the same network as the database container, 
+    # allows "forwardPorts" in devcontainer.json function.
+    network_mode: service:py-postgre
+
+    # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  py-postgre:
+    container_name: py-postgre
+    image: postgres:18
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      # If it is necessary to request the use of the environment variable, change to the line below
+      # POSTGRES_PASSWORD: ${POSTGRES_PWD:?Environment variable is required}
+      POSTGRES_PASSWORD: ${POSTGRES_PWD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-postgres} 
+      # The PGDATA environment variable of the image was changed to be version specific in PostgreSQL
+      # Later versions will replace 18 with their respective major version 
+      # (e.g., /var/lib/postgresql/19/docker for PostgreSQL 19.x)
+      PGDATA: /var/lib/postgresql/18/docker
+      # If you set POSTGRES_HOST_AUTH_METHOD to trust, then POSTGRES_PASSWORD is not required.
+      # POSTGRES_HOST_AUTH_METHOD: ${POSTGRES_HOST_AUTH_METHOD:-trust}      
+
+    volumes:
+      - py-pgdata:/var/lib/postgresql
+
+
+    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
+    # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+  py-pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@pgadmin.org}
+      # If it is necessary to request the use of the environment variable, change to the line below
+      # PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:?Environment variable is required}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PWD:-admin}
+
+    depends_on:
+      - py-postgre
+
+    volumes:
+      - py-pgadmin:/var/lib/pgadmin
+
+    network_mode: service:py-postgre
+
+volumes:
+  py-pgdata:
+  py-pgadmin:
