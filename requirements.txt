@@ -1,7 +1,11 @@
-# This is a comment, to show how #-prefixed lines are ignored.
-# It is possible to specify requirements as plain names.
+# This file lists the Python packages required to run the application.
+# Using in dockerfile from devcontainer vscode
+# You can install the packages listed in this file using pip:
+# pip install -r requirements.txt
 # See the pip documentation for more details:
 # https://pip.pypa.io/en/stable/reference/requirements-file-format/
 
 # For example, the line below specifies the latest version of psycopg2.
+pandas
 psycopg2
+streamlit
