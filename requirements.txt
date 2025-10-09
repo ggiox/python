@@ -1,1 +1,7 @@
+# This is a comment, to show how #-prefixed lines are ignored.
+# It is possible to specify requirements as plain names.
+# See the pip documentation for more details:
+# https://pip.pypa.io/en/stable/reference/requirements-file-format/
+
+# For example, the line below specifies the latest version of psycopg2.
 psycopg2
