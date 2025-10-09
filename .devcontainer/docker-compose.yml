@@ -11,12 +11,15 @@ services:
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
-    # Runs app on the same network as the database container, 
-    # allows "forwardPorts" in devcontainer.json function.
-    network_mode: service:py-postgre
-
     # Use "forwardPorts" in **devcontainer.json** to forward an app port locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
+
+    # Runs app on the same network as the database container, 
+    # allows "forwardPorts" in devcontainer.json function.
+    # network_mode: service:py-postgre
+
+    networks:
+      - py-network
 
   py-postgre:
     container_name: py-postgre
@@ -39,6 +42,12 @@ services:
     volumes:
       - py-pgdata:/var/lib/postgresql
 
+    ports:
+      - "5432:5432"
+
+    # Use a user-defined bridge network so the app can connect to the database container by name.
+    networks:
+      - py-network
 
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
@@ -60,7 +69,17 @@ services:
     volumes:
       - py-pgadmin:/var/lib/pgadmin
 
-    network_mode: service:py-postgre
+    # Use a user-defined bridge network so the app can connect to the database container by name.
+    #network_mode: service:py-postgre
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+
+    networks:
+      - py-network
+
+networks:
+  py-network:
+    driver: bridge
 
 volumes:
   py-pgdata:

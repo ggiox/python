@@ -6,6 +6,9 @@
 	"service": "py-app",
 	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
 
+	// Comment the next line to use the others services defined in the docker-compose.yml file
+	, "runServices": ["py-app"]
+
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 
