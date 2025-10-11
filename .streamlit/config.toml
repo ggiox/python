@@ -1,0 +1,4 @@
+    [server]
+
+    # Desativar o prompt inicial solicitando o email
+    showEmailPrompt = false
