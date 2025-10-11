@@ -54,7 +54,8 @@ class PostgresDB:
                 self.conn.rollback()
                 print(f"Transação desfeita devido ao erro: {exc_val}")
                 
-            self.cursor.close()
+            if self.cursor:
+                self.cursor.close()
             self.conn.close()
             # print("Conexão e cursor fechados.") # Opcional: para feedback
 
@@ -82,66 +83,76 @@ class PostgresDB:
             # Não faz o rollback aqui, o __exit__ faz. Apenas relança o erro.
             raise e
 
-# --- Exemplo de Uso ---
 
-# 1. Defina seus detalhes de conexão
-DB_PARAMS = {
-    'dbname': 'postgres',
-    'user': 'postgres',
-    'password': 'postgres',
-    'host': 'py-postgres',  # Use 'localhost' se estiver rodando localmente
-}
+# =========================================================================
+# APLICAÇÃO DE EXEMPLO
+# =========================================================================
 
-# Consulta para criar uma tabela (se não existir)
-SQL_CREATE = """
-CREATE TABLE IF NOT EXISTS produtos (
-    id SERIAL PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    preco NUMERIC(10, 2)
-);
-"""
+def main():
+    # 1. Defina seus detalhes de conexão
+    DB_PARAMS = {
+        'dbname': 'postgres',
+        'user': 'postgres',
+        'password': 'postgres',
+        'host': 'py-postgres',  # Use 'localhost' se estiver rodando localmente
+    }
 
-# Consulta para inserir dados
-SQL_INSERT = "INSERT INTO produtos (nome, preco) VALUES (%s, %s);"
+    # Consulta para criar uma tabela (se não existir)
+    SQL_CREATE = """
+    CREATE TABLE IF NOT EXISTS produtos (
+        id SERIAL PRIMARY KEY,
+        nome VARCHAR(100) NOT NULL,
+        preco NUMERIC(10, 2)
+    );
+    """
 
-# Consulta para selecionar dados
-SQL_SELECT = "SELECT nome, preco FROM produtos WHERE preco > %s;"
+    # Consulta para inserir dados
+    SQL_INSERT = "INSERT INTO produtos (nome, preco) VALUES (%s, %s);"
 
-print("--- Iniciando Operações com o Banco de Dados ---")
+    # Consulta para selecionar dados
+    SQL_SELECT = "SELECT nome, preco FROM produtos WHERE preco > %s;"
 
-try:
-    # Cria uma instância da classe e entra no bloco 'with'
-    with PostgresDB(**DB_PARAMS) as db:
-        print("Conexão bem-sucedida.")
-        
-        # 1. Cria a tabela (se já existir, não fará nada)
-        db.execute_query(SQL_CREATE)
-        print("Tabela 'produtos' verificada/criada.")
-        
-        # 2. Insere um novo produto
-        novos_produtos = [
-            ("Laranja", 12.50),
-            ("Maçã", 8.99),
-            ("Banana", 4.00)
-        ]
-        
-        for nome, preco in novos_produtos:
-            db.execute_query(SQL_INSERT, (nome, preco))
-        print(f"Inseridos {len(novos_produtos)} produtos.")
+    print("--- Iniciando Operações com o Banco de Dados ---")
 
-        # 3. Consulta os produtos mais caros
-        preco_minimo = 5.00
-        resultados = db.execute_query(SQL_SELECT, (preco_minimo,), fetch_results=True)
-        
-        print(f"\nProdutos com preço superior a R${preco_minimo:.2f}:")
-        for nome, preco in resultados:
-            print(f"- {nome}: R${preco}")
+    try:
+        # Cria uma instância da classe e entra no bloco 'with'
+        with PostgresDB(**DB_PARAMS) as db:
+            print("Conexão bem-sucedida.")
             
-    # Ao sair do bloco 'with', o commit é executado e a conexão é fechada
+            # 1. Cria a tabela (se já existir, não fará nada)
+            db.execute_query(SQL_CREATE)
+            print("Tabela 'produtos' verificada/criada.")
+            
+            # 2. Insere um novo produto
+            novos_produtos = [
+                ("Laranja", 12.50),
+                ("Maçã", 8.99),
+                ("Banana", 4.00)
+            ]
+            
+            for nome, preco in novos_produtos:
+                db.execute_query(SQL_INSERT, (nome, preco))
+            print(f"Inseridos {len(novos_produtos)} produtos.")
 
-except ConnectionError as e:
-    print(f"Não foi possível continuar as operações: {e}")
-except Error as e:
-    print(f"Ocorreu um erro SQL durante a execução: {e}")
+            # 3. Consulta os produtos mais caros
+            preco_minimo = 5.00
+            resultados = db.execute_query(SQL_SELECT, (preco_minimo,), fetch_results=True)
+            
+            print(f"\nProdutos com preço superior a R${preco_minimo:.2f}:")
+            if resultados and isinstance(resultados, list):
+                for nome, preco in resultados:
+                    print(f"- {nome}: R${preco}")
+            else:
+                print("Nenhum produto encontrado.")
+                
+        # Ao sair do bloco 'with', o commit é executado e a conexão é fechada
 
-print("--- Fim das Operações ---")
+    except ConnectionError as e:
+        print(f"Não foi possível continuar as operações: {e}")
+    except Error as e:
+        print(f"Ocorreu um erro SQL durante a execução: {e}")
+
+    print("--- Fim das Operações ---")
+
+if __name__ == "__main__":
+    main() 

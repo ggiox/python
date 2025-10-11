@@ -48,6 +48,9 @@ class PostgresConnector:
         @st.cache_data(ttl=600)
         def fetch_table_names():
             try:
+                if self.conn is None:
+                    st.error("Conexão com o banco de dados não está estabelecida.")
+                    return None
                 df = self.conn.query(query, ttl=600)
                 return df
             except Exception as e:
@@ -75,6 +78,9 @@ class PostgresConnector:
         try:
             # conn.query() executa e tenta retornar um DataFrame. 
             # Funciona para SELECT, INSERT, UPDATE, etc.
+            if self.conn is None:
+                st.error("Conexão com o banco de dados não está estabelecida.")
+                return
             df_resultado = self.conn.query(query, ttl=0) # ttl=0 executa sempre
             
             if not df_resultado.empty:
