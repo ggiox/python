@@ -89,7 +89,7 @@ DB_PARAMS = {
     'dbname': 'postgres',
     'user': 'postgres',
     'password': 'postgres',
-    'host': 'py-postgre',  # Use 'localhost' se estiver rodando localmente
+    'host': 'py-postgres',  # Use 'localhost' se estiver rodando localmente
 }
 
 # Consulta para criar uma tabela (se não existir)
