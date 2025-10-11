@@ -97,7 +97,7 @@ class PostgresConnector:
 # =========================================================================
 
 def main():
-    st.title("Interface POO para PostgreSQL com Streamlit")
+    st.title("Interface para PostgreSQL com Streamlit")
     
     # 1. Criação do OBJETO (instância da classe)
     # Passamos o nome da conexão do secrets.toml (padrão é "postgresql")
