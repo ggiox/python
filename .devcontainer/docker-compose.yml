@@ -62,6 +62,7 @@ services:
       # If it is necessary to request the use of the environment variable, change to the line below
       # PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:?Environment variable is required}
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PWD:-admin}
+      PGADMIN_PORT: ${PGADMIN_PORT:-5050}
 
     depends_on:
       - py-postgres
@@ -72,7 +73,7 @@ services:
     # Use a user-defined bridge network so the app can connect to the database container by name.
     #network_mode: service:py-postgre
     ports:
-      - "${PGADMIN_PORT:-5050}:5050"
+      - "${PGADMIN_PORT:-5050}:80"
 
     networks:
       - py-network
