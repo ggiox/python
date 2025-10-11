@@ -21,8 +21,8 @@ services:
     networks:
       - py-network
 
-  py-postgre:
-    container_name: py-postgre
+  py-postgres:
+    container_name: py-postgres
     image: postgres:18
     restart: unless-stopped
 
@@ -64,7 +64,7 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PWD:-admin}
 
     depends_on:
-      - py-postgre
+      - py-postgres
 
     volumes:
       - py-pgadmin:/var/lib/pgadmin
@@ -72,7 +72,7 @@ services:
     # Use a user-defined bridge network so the app can connect to the database container by name.
     #network_mode: service:py-postgre
     ports:
-      - "${PGADMIN_PORT:-5050}:80"
+      - "${PGADMIN_PORT:-5050}:5050"
 
     networks:
       - py-network
