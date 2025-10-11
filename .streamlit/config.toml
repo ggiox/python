@@ -2,3 +2,8 @@
 
     # Desativar o prompt inicial solicitando o email
     showEmailPrompt = false
+
+    [client]
+    
+    # Remove o botão deploy
+    toolbarMode = "minimal"
