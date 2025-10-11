@@ -13,7 +13,7 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Python Debugger: Streamlit",
+            "name": "Streamlit Debugger: Current File",
             "type": "debugpy",
             "request": "launch",
             "module": "streamlit",
