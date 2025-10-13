@@ -1,4 +1,3 @@
-# main.py
 # Programa principal que exibe um menu para o usuário escolher entre 
 # ver a versão do Python ou listar os pacotes instalados.
 
