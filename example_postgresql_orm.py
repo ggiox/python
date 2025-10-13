@@ -4,7 +4,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 # --- 1. Configuração do Banco de Dados ---
 # Formato da URL: 'dialeto+driver://usuario:senha@host:porta/nome_do_banco'
-DB_URL = "postgresql+psycopg2://postgres:postgres@py-postgres:5432/postgres"
+DB_URL = "postgresql+psycopg://postgres:postgres@py-postgres:5432/postgres"
 
 # Crie o Engine, o ponto de entrada para o banco de dados
 try:
