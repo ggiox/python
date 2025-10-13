@@ -15,16 +15,6 @@ models.Base.metadata.create_all(bind=engine)
 
 # 2. Cria o usuário admin se ele não existir
 try:
-    # Obtém uma nova sessão de banco de dados
-    db = next(get_db()) 
-    crud.create_initial_superuser(db=db)
-finally:
-    # Garante que a sessão seja fechada
-    # Se a função retornar antes de 'next', pode ser necessário usar um bloco try/finally mais explícito
-    pass # A função 'next(get_db())' já lida com o fechamento se for usada em um contexto de 'with' ou em uma função
-
-# Se você não gosta de usar next(get_db()), a forma mais robusta e segura é:
-try:
     db = next(get_db())
     crud.create_initial_superuser(db=db)
 finally:
@@ -73,7 +63,9 @@ def read_users_me(current_user: CurrentUserDependency):
 # --- Rotas CRUD de Usuário (Criação e Leitura) ---
 # A criação de usuário é pública para permitir o registro
 @app.post("/users/", response_model=schemas.User, status_code=status.HTTP_201_CREATED)
-def create_user(user: schemas.UserCreate, db: DBDependency):
+# Caso queira restrigir a criação de usuários, adicione a dependência de autenticação:
+# def create_user(user: schemas.UserCreate, db: DBDependency, current_user: CurrentUserDependency):
+def create_user(user: schemas.UserCreate, db: DBDependency):    
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
         raise HTTPException(status_code=400, detail="Email already registered")
