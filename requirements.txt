@@ -8,6 +8,7 @@
 # For example, the line below specifies the latest version of psycopg2.
 pandas
 numpy
-psycopg2-binary
+psycopg[binary,pool]
 sqlalchemy
 streamlit
+fastapi[standard]

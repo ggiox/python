@@ -1,5 +1,5 @@
-import psycopg2
-from psycopg2 import Error
+import psycopg
+from psycopg import Error
 
 class PostgresDB:
     """
@@ -25,7 +25,7 @@ class PostgresDB:
         Tenta estabelecer a conexão.
         """
         try:
-            self.conn = psycopg2.connect(
+            self.conn = psycopg.connect(
                 dbname=self.dbname,
                 user=self.user,
                 password=self.password,
