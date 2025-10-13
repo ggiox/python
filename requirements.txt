@@ -10,5 +10,8 @@ pandas
 numpy
 psycopg[binary,pool]
 sqlalchemy
+pydantic
 streamlit
+passlib[bcrypt]
+PyJWT
 fastapi[standard]
