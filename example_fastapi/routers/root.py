@@ -1,5 +1,6 @@
 # routers/root.py
 
+# Importações de bibliotecas externas
 from fastapi import APIRouter
 
 # 1. Cria o APIRouter

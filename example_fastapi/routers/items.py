@@ -1,8 +1,9 @@
+# example_fastapi/routers/items.py
+
 # Importações de bibliotecas externas
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-
 # Importações de módulos locais
 from .. import models, schemas, crud, auth
 from ..database import get_db

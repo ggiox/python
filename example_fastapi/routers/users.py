@@ -1,9 +1,10 @@
+# example_fastapi/routers/users.py
+
 # Importações de bibliotecas externas
 from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-
 # Importações de módulos locais
 from .. import models, schemas, crud, auth
 from ..database import get_db

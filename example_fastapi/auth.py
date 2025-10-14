@@ -1,14 +1,15 @@
+# example_fastapi/auth.py
+
+# Importações de bibliotecas externas
 from datetime import datetime, timedelta, timezone
 from typing import Annotated
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from passlib.context import CryptContext
-
+from sqlalchemy.orm import Session
 import jwt
 from jwt.exceptions import InvalidTokenError as JWTError
-
-from sqlalchemy.orm import Session
-
+# Importações de módulos locais
 from . import models
 from .database import get_db
 
