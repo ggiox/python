@@ -1,4 +1,4 @@
-# routers/__init__.py
+# example_fastapi/routers/__init__.py
 
 # Isso permite que você faça a importação "from .routers import users_router" 
 # ou "from .routers import items_router" diretamente se quiser.

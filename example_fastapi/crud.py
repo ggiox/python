@@ -1,3 +1,6 @@
+# example_fastapi/crud.py
+
+# Importações de bibliotecas externas
 from sqlalchemy.orm import Session
 from . import models, schemas, auth
 

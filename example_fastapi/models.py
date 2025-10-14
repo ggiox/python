@@ -1,7 +1,9 @@
+# example_fastapi/models.py
+
+# Importações de bibliotecas externas
 from typing import List
 from sqlalchemy import String, Integer, Boolean, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
 # Importa a Base declarativa que foi definida em database.py
 from .database import Base 
 

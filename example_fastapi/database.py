@@ -1,4 +1,6 @@
-# database.py
+# example_fastapi/database.py
+
+# Importações de bibliotecas externas
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 # Importações para o modelo 2.0

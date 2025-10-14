@@ -1,4 +1,4 @@
-# routers/root.py
+# example_fastapi/routers/root.py
 
 # Importações de bibliotecas externas
 from fastapi import APIRouter
