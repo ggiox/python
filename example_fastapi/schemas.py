@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 # --- Esquemas de Usuário ---
 
@@ -12,9 +12,7 @@ class User(UserBase):
     id: int
     is_active: bool
 
-    class Config:
-        # Permite mapeamento do ORM (SQLAlchemy) para o Pydantic
-        orm_mode = True 
+    model_config = ConfigDict(from_attributes=True)
 
 class UserUpdate(BaseModel):
     # Todos os campos são opcionais, exceto se você definir um Pydantic Field com '...'
@@ -27,9 +25,7 @@ class UserUpdate(BaseModel):
     # Exemplo: Se você tiver um campo 'is_active' ou 'is_admin'
     is_active: bool | None = None 
     
-    class Config:
-        # Permite que o Pydantic funcione com atributos de objeto (dot notation)
-        from_attributes = True 
+    model_config = ConfigDict(from_attributes=True)
 
 # --- Esquemas de Item ---
 
@@ -44,5 +40,4 @@ class Item(ItemBase):
     id: int
     owner_id: int
 
-    class Config:
-        orm_mode = True
+    model_config = ConfigDict(from_attributes=True)

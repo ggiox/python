@@ -27,7 +27,7 @@ def create_item_for_current_user(
 
 # READ ALL Items
 @router.get("/", response_model=list[schemas.Item])
-def read_items(db: DBDependency, skip: int = 0, limit: int = 100):
+def read_items(db: DBDependency, current_user: CurrentUserDependency, skip: int = 0, limit: int = 100):
     items = crud.get_items(db, skip=skip, limit=limit)
     return items
 
