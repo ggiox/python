@@ -14,6 +14,34 @@ def create_user(db: Session, user: schemas.UserCreate) -> models.User:
     db.refresh(db_user)
     return db_user
 
+def update_user(db: Session, user_id: int, user_update: schemas.UserUpdate) -> models.User | None:
+    # 1. Busca o usuário pelo ID
+    db_user = db.get(models.User, user_id)
+    
+    if not db_user:
+        return None  # Usuário não encontrado
+
+    # 2. Itera sobre os dados fornecidos no schema de update
+    update_data = user_update.model_dump(exclude_unset=True) # Exclui campos que não foram definidos (None)
+    
+    # 3. Aplica as alterações
+    for key, value in update_data.items():
+        if key == "password" and value is not None:
+            # Se a senha foi fornecida, hasheia antes de salvar
+            hashed_password = auth.get_password_hash(value)
+            setattr(db_user, "hashed_password", hashed_password)
+        
+        elif value is not None:
+            # Atualiza os outros campos (email, is_active, etc.)
+            setattr(db_user, key, value)
+            
+    # 4. Salva a transação no banco
+    db.add(db_user)
+    db.commit()
+    db.refresh(db_user)
+    
+    return db_user
+
 # --- Função para criar um usuário admin inicial ---
 
 def create_initial_superuser(db: Session) -> models.User:

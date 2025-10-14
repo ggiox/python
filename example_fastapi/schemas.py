@@ -16,6 +16,21 @@ class User(UserBase):
         # Permite mapeamento do ORM (SQLAlchemy) para o Pydantic
         orm_mode = True 
 
+class UserUpdate(BaseModel):
+    # Todos os campos são opcionais, exceto se você definir um Pydantic Field com '...'
+    # O email pode ser opcional.
+    email: str | None = None 
+    
+    # A senha deve ser opcional. Se for fornecida, será hasheada na lógica CRUD.
+    password: str | None = None
+    
+    # Exemplo: Se você tiver um campo 'is_active' ou 'is_admin'
+    is_active: bool | None = None 
+    
+    class Config:
+        # Permite que o Pydantic funcione com atributos de objeto (dot notation)
+        from_attributes = True 
+
 # --- Esquemas de Item ---
 
 class ItemBase(BaseModel):

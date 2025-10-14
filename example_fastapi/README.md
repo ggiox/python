@@ -8,7 +8,11 @@ Estrutura do Projeto:
 ├── models.py      # Modelos de dados do SQLAlchemy (User, Item)
 ├── schemas.py     # Esquemas Pydantic (validação de dados)
 ├── auth.py        # Funções de segurança (Hashing, JWT, Dependência de Usuário)
-└── crud.py        # Funções de CRUD (interação com o banco de dados)
+├── crud.py        # Funções de CRUD (interação com o banco de dados)
+└── routers/
+    ├── __init__.py
+    ├── users.py   # Contém rotas de Autenticação e Usuário (token, create_user, update_user)
+    └── items.py   # Contém rotas CRUD de Item
 
 # FastAPI e Uvicorn
 pip install "fastapi[standard]"
