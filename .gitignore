@@ -1,0 +1,41 @@
+# Arquivos e pastas a ignorar no projeto Python/FastAPI
+
+### Ambientes Virtuais ###
+.venv/
+venv/
+env/
+/bin/
+/include/
+/lib/
+/lib64/
+
+### Cache e Compilação Python ###
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+### Dependências ###
+# Não subir a pasta de instalação de pacotes
+/site-packages/
+
+### Testes e Build ###
+.pytest_cache/
+dist/
+build/
+*.egg-info/
+
+### Arquivos de IDE e Editor ###
+.vscode/
+.idea/
+*.sublime-workspace
+
+### Arquivos de Dados Locais e Logs (Segurança) ###
+# Variáveis de ambiente (SECRET_KEY, DB_URL, etc.)
+.env
+.env.*
+
+# Arquivos de banco de dados e logs (se houver)
+*.sqlite
+*.db
+*.log
