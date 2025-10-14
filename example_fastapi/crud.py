@@ -54,7 +54,6 @@ def create_initial_superuser(db: Session) -> models.User:
 
     if db_user:
         # Usuário já existe, retorna o existente
-        print(f"Usuário admin '{admin_email}' já existe.")
         return db_user
     
     # 2. Se não existir, cria um novo usuário admin
