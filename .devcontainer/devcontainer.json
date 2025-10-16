@@ -4,7 +4,8 @@
 	"name": "Python 3",
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "py-app",
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}"
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"remoteUser": "vscode"
 
 	// Uncomment the next line to use only the py-app service defined in the docker-compose.yml file
 	// "runServices": ["py-app"],
