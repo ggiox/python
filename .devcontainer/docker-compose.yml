@@ -4,7 +4,8 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
-
+    # Use the image for faster startup - comment out the build section above if using this.
+    # image: "python3/devcontainer"
     volumes:
       - ../..:/workspaces:cached
 
